@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
-matrix_width = 24
-matrix_height = 10
+matrix_width = 20
+matrix_height = 12
 
 buttons_matrix = [[0 for j in range(matrix_width)] for i in range(matrix_height)]
 
