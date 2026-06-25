@@ -81,6 +81,10 @@ inline Glyph fontGlyph(char ch) {
         case 'x': return {{ 68, 40, 16, 40, 68 }};
         case 'y': return {{ 12, 80, 80, 80, 60 }};
         case 'z': return {{ 68, 100, 84, 76, 68 }};
+        case '(': return {{ 0, 28, 34, 65, 0 }};
+        case ')': return {{ 0, 65, 34, 28, 0 }};
+        case '/': return {{ 96, 16, 8, 4, 3 }};
+        case '+': return {{ 8, 8, 62, 8, 8 }};
         default: return {{ 0, 0, 0, 0, 0 }};
     }
 }

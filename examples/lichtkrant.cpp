@@ -41,12 +41,33 @@ public:
     }
 
 private:
-    static const int COUNT = 6;
+    static const int COUNT = 27;
     const char* MESSAGES[COUNT] = {
         "WEOI 2026 LUXEMBOURG",
         "HELLO WORLD",
         "I LOVE C++",
-        "JANE STREET",
+        "HEY KIM",
+        "LOOK NO HANDS!!",
+        "TIME LIMIT EXCEEDED",
+        "WRONG ANSWER",
+        "SEGFAULT (CORE DUMPED)",
+        "IT WORKS ON MY MACHINE",
+        "// TODO: FIX LATER",
+        "HAVE YOU TRIED BINARY SEARCH?",
+        "GREEDY WORKS (PROBABLY)",
+        "OFF BY ONE",
+        "O(N!) SERIOUSLY",
+        "IF IT COMPILES ALWAYS SUBMIT",
+        "READ THE PROBLEM STATEMENT",
+        "ALL YOUR BASE ARE BELONG TO US",
+        "DO A BARREL ROLL",
+        "IT'S DANGEROUS TO GO ALONE",
+        "ONE DOES NOT SIMPLY DEBUG",
+        "HACK THE PLANET",
+        "THERE IS NO SPOON",
+        "NEVER GONNA GIVE YOU UP",
+        "PLEASE DO NOT FEED THE CODER",
+        "240 PIXELS OF RAW POWER",
         "UP DOWN CHANGE TEXT",
         "LEFT RIGHT CHANGE SPEED",
     };
