@@ -30,10 +30,11 @@ foreach(src ${EXAMPLE_SRCS})
         ${src}
         ${ROOT}/sdk/Badge.cpp
         ${ROOT}/sdk/MainLoop.cpp
-        ${ROOT}/sdk/Animation.cpp)
+        ${ROOT}/sdk/Animation.cpp
+        ${ROOT}/sdk/KimsPower.cpp)
     target_include_directories(${name} PRIVATE ${ROOT} ${ROOT}/examples)
     pico_enable_stdio_uart(${name} 0)
     pico_enable_stdio_usb(${name} 0)
-    target_link_libraries(${name} pico_stdlib)
+    target_link_libraries(${name} pico_stdlib hardware_pwm hardware_vreg)
     pico_add_extra_outputs(${name})
 endforeach()

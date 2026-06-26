@@ -1,18 +1,19 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
-// Rotating spiral arms.
+// A rotating spiral that also breathes from dim to bright.
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
 #include "sdk/KimsPower.hpp"
 #include "trig.hpp"
 
-class Spiral : public MainLoop {
+class Spiral2 : public MainLoop {
 public:
-    Spiral(Badge& b) : MainLoop(b) {}
+    Spiral2(Badge& b) : MainLoop(b) {}
 
     void nextFrame(Badge& badge, const FrameData&) override {
         t += 2;
+        KimsPower::setBrightness((uint8_t)(102 + (isin(t >> 2) * 94 >> 8)));
+
         for (int r = 0; r < 12; r++) {
             for (int arm = 0; arm < 3; arm++) {
                 int a = r * 18 + t + arm * 85;
@@ -28,7 +29,6 @@ private:
 };
 
 int main() {
-    Badge b;
-    KimsPower::setBrightness(128);
-    Spiral(b).loop();
+    Badge badge;
+    Spiral2(badge).loop();
 }

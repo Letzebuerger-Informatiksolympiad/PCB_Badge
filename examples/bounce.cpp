@@ -4,6 +4,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
+#include "sdk/KimsPower.hpp"
 #include <cstdlib>
 
 struct Ball { int x, y, vx, vy; };

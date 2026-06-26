@@ -3,6 +3,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
+#include "sdk/KimsPower.hpp"
 #include <cstdlib>
 
 class Fire : public MainLoop {

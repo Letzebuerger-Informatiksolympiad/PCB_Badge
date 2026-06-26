@@ -3,6 +3,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
+#include "sdk/KimsPower.hpp"
 #include "trig.hpp"
 
 class Cycle : public MainLoop {

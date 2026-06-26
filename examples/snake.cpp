@@ -5,6 +5,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
+#include "sdk/KimsPower.hpp"
 #include "digits3x5.hpp"
 #include <cstdlib>
 

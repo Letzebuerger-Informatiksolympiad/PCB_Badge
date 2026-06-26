@@ -4,6 +4,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
+#include "sdk/KimsPower.hpp"
 #include <cstdlib>
 
 static const int FACE[7] = {0, 0b000010000, 0b100000001, 0b100010001,
