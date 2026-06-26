@@ -41,7 +41,7 @@ Arduino IDE is the most beginner friendly option if you do not have experience f
 We recommend if you are writting code from scratch to still use `badge.cpp` for the bit maps and pins.
 
 Arduino IDE board manager: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
-
+Board is named Raspberry Pi Pico
 ---
 
 
