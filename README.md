@@ -7,6 +7,11 @@ This repository includes everything you need to make the most of your badge. It 
 **Important:** The web app runs on a remote server. Any changes you make inside the browser are **temporary** and will **not be saved** after you leave or refresh the page. Save the files you are working on to your laptop!
 
 ---
+## "Flashing" the PCB:
+* Press and hold the `RESET` button
+* Press the `BOOT` button
+* Release both
+* The PCB will then be wiped and ready for a new file!
 
 ## Using the Web Emulator
 
