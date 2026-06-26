@@ -42,6 +42,8 @@ We recommend if you are writting code from scratch to still use `badge.cpp` for 
 
 Arduino IDE board manager: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 Board is named Raspberry Pi Pico
+
+
 ---
 
 
