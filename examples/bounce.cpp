@@ -3,10 +3,10 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
+#include "sdk/KimsPower.hpp"   // run at 48 MHz to save battery, just by including it
 #include <cstdlib>
 
-struct Ball { int x, y, vx, vy; };
+struct Ball { int x, y, vx, vy, bri; };   // x/y in 1/16 px
 
 class Bounce : public MainLoop {
 public:
@@ -16,6 +16,7 @@ public:
             bb.x = (rand() % 20) << 4; bb.y = (rand() % 12) << 4;
             bb.vx = (rand() % 2 ? 1 : -1) * (5 + rand() % 6);
             bb.vy = (rand() % 2 ? 1 : -1) * (5 + rand() % 6);
+            bb.bri = 90 + rand() % 166;   // each ball its own brightness, 90..255
         }
     }
 
@@ -26,7 +27,7 @@ public:
             if (bb.x > (19 << 4)) { bb.x = 19 << 4; bb.vx = -bb.vx; }
             if (bb.y < 0)        { bb.y = 0;        bb.vy = -bb.vy; }
             if (bb.y > (11 << 4)) { bb.y = 11 << 4; bb.vy = -bb.vy; }
-            badge.setPixel(bb.x >> 4, bb.y >> 4);
+            badge.setPixel(bb.x >> 4, bb.y >> 4, bb.bri);
         }
     }
 

@@ -3,7 +3,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
+#include "sdk/KimsPower.hpp"   // run at 48 MHz to save battery, just by including it
 #include "font5x7.hpp"
 #include <cstring>
 
@@ -14,12 +14,13 @@ public:
     void nextFrame(Badge& badge, const FrameData& data) override {
         if (data.buttons.up.pressed)   { message = (message + 1) % COUNT;         pos = 0; }
         if (data.buttons.down.pressed) { message = (message + COUNT - 1) % COUNT; pos = 0; }
-        if (data.buttons.right.pressed && delay > 1)  delay--;
-        if (data.buttons.left.pressed  && delay < 24) delay++;
+        if (data.buttons.right.pressed && delay > 1)  delay--;   // faster
+        if (data.buttons.left.pressed  && delay < 24) delay++;   // slower
 
         const char* text = MESSAGES[message];
         int textWidth = (int)strlen(text) * (FONT_W + 1);
 
+        // Move one pixel every `delay` frames so it is easy to read.
         if (--ticks <= 0) {
             ticks = delay;
             pos++;
@@ -33,9 +34,12 @@ public:
             for (int x = 0; x < FONT_W; x++) {
                 int screenX = letterX + x;
                 if (screenX < 0 || screenX >= 20) continue;
+                // Fade letters in and out near the two edges of the screen.
+                int edge = screenX < 19 - screenX ? screenX : 19 - screenX;
+                int bright = edge >= 4 ? 255 : 70 + edge * 46;
                 for (int y = 0; y < FONT_H; y++)
                     if (g.col[x] & (1 << y))
-                        badge.setPixel(screenX, top + y);
+                        badge.setPixel(screenX, top + y, bright);
             }
         }
     }

@@ -4,21 +4,25 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
+#include "sdk/KimsPower.hpp"   // run at 48 MHz to save battery, just by including it
 #include "digits3x5.hpp"
 #include <cstdlib>
 #include <cstring>
 
 static const int PIECES[7][4][2] = {
-    {{-1, 0}, {0, 0}, {1, 0}, {2, 0}},
-    {{ 0, 0}, {1, 0}, {0, 1}, {1, 1}},
-    {{-1, 0}, {0, 0}, {1, 0}, {0, 1}},
-    {{ 0, 0}, {1, 0}, {-1, 1}, {0, 1}},
-    {{-1, 0}, {0, 0}, {0, 1}, {1, 1}},
-    {{-1, 0}, {0, 0}, {1, 0}, {1, 1}},
-    {{-1, 0}, {0, 0}, {1, 0}, {-1, 1}},
+    {{-1, 0}, {0, 0}, {1, 0}, {2, 0}},   // I
+    {{ 0, 0}, {1, 0}, {0, 1}, {1, 1}},   // O
+    {{-1, 0}, {0, 0}, {1, 0}, {0, 1}},   // T
+    {{ 0, 0}, {1, 0}, {-1, 1}, {0, 1}},  // S
+    {{-1, 0}, {0, 0}, {0, 1}, {1, 1}},   // Z
+    {{-1, 0}, {0, 0}, {1, 0}, {1, 1}},   // J
+    {{-1, 0}, {0, 0}, {1, 0}, {-1, 1}},  // L
 };
 
+// One brightness per piece type, all at or below 75% (191/255).
+static const uint8_t BRIGHT[7] = { 191, 100, 160, 125, 180, 110, 145 };
+
+// The word SCORE, drawn by hand. The digits come from digits3x5.hpp.
 static const char* SCORE_WORD[5] = {
     "### ### ### ##  ###",
     "#   #   # # # # #  ",
@@ -44,7 +48,7 @@ public:
         if (data.buttons.down.pressed)  move(0, 1);
         if (data.buttons.right.pressed) rotate(1);
 
-        int step = data.buttons.left.down ? 6 : FALL;
+        int step = data.buttons.left.down ? 6 : FALL;   // hold LEFT to drop faster
         if (--fall <= 0) {
             fall = step;
             if (!move(-1, 0)) lock();
@@ -52,14 +56,15 @@ public:
 
         for (int y = 0; y < 12; y++)
             for (int x = 0; x < 20; x++)
-                if (board[y][x]) badge.setPixel(x, y);
+                if (board[y][x]) badge.setPixel(x, y, board[y][x]);
         for (int i = 0; i < 4; i++)
-            badge.setPixel(px + piece[i][0], py + piece[i][1]);
+            badge.setPixel(px + piece[i][0], py + piece[i][1], BRIGHT[type]);
     }
 
 private:
     static const int FALL = 22;
-    bool board[12][20], over;
+    uint8_t board[12][20];   // 0 = empty, otherwise the locked brightness
+    bool over;
     int piece[4][2], px, py, type, fall, score;
 
     void reset() { memset(board, 0, sizeof board); score = 0; over = false; spawn(); }
@@ -97,7 +102,7 @@ private:
     }
 
     void lock() {
-        for (int i = 0; i < 4; i++) board[py + piece[i][1]][px + piece[i][0]] = true;
+        for (int i = 0; i < 4; i++) board[py + piece[i][1]][px + piece[i][0]] = BRIGHT[type];
         clearColumns();
         spawn();
     }

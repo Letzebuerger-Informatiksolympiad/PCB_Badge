@@ -5,6 +5,7 @@
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
 #include "digits3x5.hpp"
+#include "trig.hpp"
 #include <cstdlib>
 
 class Snake : public MainLoop {
@@ -33,13 +34,24 @@ public:
             if (b < 50) b = 50;
             badge.setPixel(sx[i], sy[i], b);
         }
-        badge.setPixel(fx, fy);            // the food, full brightness
+        badge.setPixel(fx, fy, foodBrightness());   // the food, gently pulsing
+        pulse++;
     }
 
 private:
     static const int MAX = 240;
     int sx[MAX], sy[MAX], len, dx, dy, fx, fy, timer, eaten;
     bool over;
+    int pulse = 0;
+
+    // The food rests at 80% for 3s, then over 1s swells up to 100% and back,
+    // following a smooth sine bump. At ~100 fps that whole cycle is 400 frames.
+    int foodBrightness() {
+        int phase = pulse % 400;
+        if (phase < 300) return 204;            // 80% of 255, held for 3 seconds
+        int s = isin((phase - 300) * 128 / 100); // 0..256..0 across the 1s bump
+        return 204 + (51 * s >> 8);             // up to 255 (100%) at the peak
+    }
 
     void reset() {
         len = 4;

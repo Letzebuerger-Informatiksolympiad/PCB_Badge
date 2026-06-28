@@ -3,7 +3,7 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
+#include "sdk/KimsPower.hpp"   // run at 48 MHz to save battery, just by including it
 #include <cstdlib>
 
 class Pong : public MainLoop {
@@ -16,7 +16,7 @@ public:
             if (data.buttons.up.down   && left > 0)        left--;
             if (data.buttons.down.down && left < 12 - PAD) left++;
 
-            int middle = right + PAD / 2, target = ballY >> 4;
+            int middle = right + PAD / 2, target = ballY >> 4;   // computer
             if (target < middle && right > 0)             right--;
             else if (target > middle && right < 12 - PAD) right++;
         }
@@ -31,12 +31,12 @@ public:
         if (bx < 0)  serve(-1);
         if (bx > 19) serve(1);
 
-        for (int y = 0; y < 12; y += 2) badge.setPixel(10, y);
+        for (int y = 0; y < 12; y += 2) badge.setPixel(10, y, 70);   // dim net
         for (int i = 0; i < PAD; i++) {
-            badge.setPixel(0, left + i);
-            badge.setPixel(19, right + i);
+            badge.setPixel(0, left + i, 200);                        // paddles a bit softer
+            badge.setPixel(19, right + i, 200);
         }
-        badge.setPixel(ballX >> 4, ballY >> 4);
+        badge.setPixel(ballX >> 4, ballY >> 4, 255);                 // the ball pops at full
     }
 
 private:
@@ -51,9 +51,9 @@ private:
 
     void bounce(int paddle) {
         int speed = vx < 0 ? -vx : vx;
-        if (speed < 9) speed++;
+        if (speed < 9) speed++;                        // rally gets a bit faster
         vx = vx < 0 ? speed : -speed;
-        vy += ((ballY >> 4) - (paddle + PAD / 2)) * 5;
+        vy += ((ballY >> 4) - (paddle + PAD / 2)) * 5; // aim with the paddle edge
         if (vy > 12) vy = 12;
         if (vy < -12) vy = -12;
     }

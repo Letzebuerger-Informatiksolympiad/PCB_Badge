@@ -3,10 +3,10 @@
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
+#include "sdk/KimsPower.hpp"   // run at 48 MHz to save battery, just by including it
 #include <cstdlib>
 
-struct Drop { int x, y, len, spd, t; };
+struct Drop { int x, y, len, spd, t, bri; };
 
 class Rain : public MainLoop {
 public:
@@ -17,7 +17,8 @@ public:
             if (--d.t <= 0) { d.t = d.spd; if (++d.y - d.len > 12) spawn(d); }
             for (int i = 0; i < d.len; i++) {
                 int y = d.y - i;
-                if (y >= 0 && y < 12) badge.setPixel(d.x, y);
+                int b = d.bri * (d.len - i) / d.len;   // bright head, fading tail
+                if (y >= 0 && y < 12) badge.setPixel(d.x, y, b);
             }
         }
     }
@@ -27,6 +28,7 @@ private:
     void spawn(Drop& d) {
         d.x = rand() % 20; d.y = -(rand() % 12);
         d.len = 2 + rand() % 4; d.spd = 3 + rand() % 4; d.t = d.spd;
+        d.bri = 70 + rand() % 186;   // each drop a different brightness, 70..255
     }
 };
 
