@@ -9,8 +9,11 @@
 #include <cstdlib>
 #include <cstring>
 
-// Brightness for each tile value: index 1 = 2, 2 = 4, ... 11 = 2048.
-static const uint8_t BR[12] = { 0, 60, 85, 110, 135, 160, 180, 200, 218, 234, 246, 255 };
+// The three brightness bands, well separated so they are easy to tell apart.
+static const uint8_t BAND[3] = { 100, 175, 255 };
+// How the 2x2 tile fills up (bits: 1=top-left, 2=top-right, 4=bottom-left,
+// 8=bottom-right): one pixel, two, three, then all four.
+static const uint8_t PAT[4] = { 0b0001, 0b0101, 0b0111, 0b1111 };
 
 class Game2048 : public MainLoop {
 public:
@@ -40,7 +43,7 @@ public:
         drawGrid(badge);
         for (int r = 0; r < 4; r++)
             for (int c = 0; c < 4; c++)
-                if (cell[r][c]) drawTile(badge, 5 + c * 3, 1 + r * 3, BR[cell[r][c]]);
+                if (cell[r][c]) drawTile(badge, 5 + c * 3, r * 3, cell[r][c]);
     }
 
 private:
@@ -51,19 +54,27 @@ private:
 
     void reset() { memset(cell, 0, sizeof cell); over = false; score = 0; overT = 0; spawn(); spawn(); }
 
-    // The board frame and the lines between the 16 cells, so the field is clear.
+    // Only the lines between the 16 cells, no outer border.
     void drawGrid(Badge& badge) {
-        for (int x = 4; x <= 16; x++) badge.setPixel(x, 0, GRID);           // top edge
-        for (int y = 0; y < 12; y++) { badge.setPixel(4, y, GRID); badge.setPixel(16, y, GRID); }
         for (int gx = 7; gx <= 13; gx += 3)
-            for (int y = 1; y < 12; y++) badge.setPixel(gx, y, GRID);       // column dividers
-        for (int gy = 3; gy <= 9; gy += 3)
+            for (int y = 0; y <= 10; y++) badge.setPixel(gx, y, GRID);      // column dividers
+        for (int gy = 2; gy <= 8; gy += 3)
             for (int x = 5; x <= 15; x++) badge.setPixel(x, gy, GRID);      // row dividers
     }
 
-    void drawTile(Badge& badge, int x, int y, int bright) {
-        badge.setPixel(x, y, bright);     badge.setPixel(x + 1, y, bright);
-        badge.setPixel(x, y + 1, bright); badge.setPixel(x + 1, y + 1, bright);
+    // Draw one tile: pick the brightness band and how many pixels from its value.
+    void drawTile(Badge& badge, int x, int y, int exp) {
+        if (exp >= 12) {                        // 4096 and beyond: a bright slash
+            badge.setPixel(x + 1, y, 255);      // top-right down...
+            badge.setPixel(x, y + 1, 255);      // ...to bottom-left
+            return;
+        }
+        int mask = PAT[(exp - 1) % 4];
+        int bright = BAND[(exp - 1) / 4];
+        if (mask & 1) badge.setPixel(x, y, bright);
+        if (mask & 2) badge.setPixel(x + 1, y, bright);
+        if (mask & 4) badge.setPixel(x, y + 1, bright);
+        if (mask & 8) badge.setPixel(x + 1, y + 1, bright);
     }
 
     void spawn() {
