@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Two pictures: RIGHT shows world, LEFT shows hello.
 
 #include "sdk/Badge.hpp"

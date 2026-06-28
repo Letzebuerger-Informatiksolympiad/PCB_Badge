@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Scrolling text; LEFT and RIGHT change the speed.
 
 #include "sdk/Badge.hpp"

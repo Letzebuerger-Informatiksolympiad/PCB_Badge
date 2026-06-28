@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // obviously I did not come up with the idea of tetris
 // Sideways Tetris that falls to the left; shows your score when you lose.
 

@@ -28,18 +28,18 @@ void draw_N(int x, int y, Badge& badge) {
 }
 
 void drawX(Badge& badge,int middle_x, int middle_y) {
-    badge.setPixel(middle_x - 1, middle_y - 1, 1);
-    badge.setPixel(middle_x - 1, middle_y + 1, 1);
-    badge.setPixel(middle_x, middle_y, 1);
-    badge.setPixel(middle_x + 1, middle_y - 1, 1);
-    badge.setPixel(middle_x + 1, middle_y + 1, 1);
+    badge.setPixel(middle_x - 1, middle_y - 1, 255);
+    badge.setPixel(middle_x - 1, middle_y + 1, 255);
+    badge.setPixel(middle_x, middle_y, 255);
+    badge.setPixel(middle_x + 1, middle_y - 1, 255);
+    badge.setPixel(middle_x + 1, middle_y + 1, 255);
 }
 
 void drawO(Badge& badge,int middle_x, int middle_y) {
-    badge.setPixel(middle_x - 1, middle_y, 1);
-    badge.setPixel(middle_x + 1, middle_y, 1);
-    badge.setPixel(middle_x, middle_y - 1, 1);
-    badge.setPixel(middle_x, middle_y + 1, 1);
+    badge.setPixel(middle_x - 1, middle_y, 255);
+    badge.setPixel(middle_x + 1, middle_y, 255);
+    badge.setPixel(middle_x, middle_y - 1, 255);
+    badge.setPixel(middle_x, middle_y + 1, 255);
 }
 
 class Tictactoe : public MainLoop {
@@ -100,7 +100,7 @@ public:
             }
         }
         if (cursor_on) {
-            badge.setPixel(1 + (cursor % 3)*4, 1 + (cursor / 3)*4, 1);
+            badge.setPixel(1 + (cursor % 3)*4, 1 + (cursor / 3)*4, 255);
         } else {
             badge.setPixel(1 + (cursor % 3)*4, 1 + (cursor / 3)*4, 0);
         }

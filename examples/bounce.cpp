@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Pixels bouncing off the walls.
 
 #include "sdk/Badge.hpp"

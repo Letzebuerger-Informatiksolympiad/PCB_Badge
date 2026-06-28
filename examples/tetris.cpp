@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // obviously I did not come up with the idea of tetris
 // Tetris; LEFT/RIGHT move, UP rotates, hold DOWN to drop.
 

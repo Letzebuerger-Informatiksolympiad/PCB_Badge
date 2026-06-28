@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Write text using the built-in font.
 
 #include "sdk/Badge.hpp"

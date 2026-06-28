@@ -59,26 +59,26 @@ public:
             badge.setPixel(8, 10);
         }
         if(frame == 12) {
-            badge.setPixel(7, 11, 1);
+            badge.setPixel(7, 11, 255);
         }
         if(frame == 13) {
-            badge.setPixel(8, 10, 1);
-            badge.setPixel(6, 11, 1);
+            badge.setPixel(8, 10, 255);
+            badge.setPixel(6, 11, 255);
         }
         if(frame == 14) {
-            badge.setPixel(7, 11, 1);
-            badge.setPixel(5, 11, 1);
+            badge.setPixel(7, 11, 255);
+            badge.setPixel(5, 11, 255);
         }
         if(frame == 15) {
-            badge.setPixel(8, 10, 1);
+            badge.setPixel(8, 10, 255);
 
-            badge.setPixel(6, 11, 1);
-            badge.setPixel(4, 11, 1);
+            badge.setPixel(6, 11, 255);
+            badge.setPixel(4, 11, 255);
         }
         if(frame >= 16) {
-            badge.setPixel(7, 11, 1);
-            badge.setPixel(5, 11, 1);
-            badge.setPixel(3, 11, 1);
+            badge.setPixel(7, 11, 255);
+            badge.setPixel(5, 11, 255);
+            badge.setPixel(3, 11, 255);
         }
     }
 };

@@ -1,10 +1,8 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Rockets that rise and burst into rings of sparks.
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
 #include "trig.hpp"
 #include <cstdlib>
 
@@ -26,8 +24,12 @@ public:
             int px = p.x >> 4, py = p.y >> 4;
             if (py >= 12) { if (!p.rocket) p.active = false; continue; }
             if (px < 0 || px >= 20 || py < 0) continue;
+            // The rocket and the fresh burst are bright; sparks dim as they age and
+            // arc down, so the explosion flashes and then fades to embers.
+            int b = p.rocket ? 255 : p.life * 18;
+            if (b > 255) b = 255;
             if (p.rocket || p.life > 5 || (p.life & 1))
-                badge.setPixel(px, py);
+                badge.setPixel(px, py, b);
         }
     }
 

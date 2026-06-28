@@ -1,11 +1,9 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // obviously I did not come up with the idea of snake
 // Snake you steer with the buttons; shows your score when you lose.
 
 #include "sdk/Badge.hpp"
 #include "sdk/MainLoop.hpp"
-#include "sdk/KimsPower.hpp"
 #include "digits3x5.hpp"
 #include <cstdlib>
 
@@ -28,8 +26,14 @@ public:
         if (data.buttons.right.pressed && dx == 0) { dx = 1;  dy = 0; }
         if (--timer <= 0) { timer = 14; move(); }
 
-        for (int i = 0; i < len; i++) badge.setPixel(sx[i], sy[i]);
-        badge.setPixel(fx, fy);
+        // Draw the body as a glowing comet: a bright head that fades down to a
+        // dim tail, so you can see which way the snake is heading.
+        for (int i = 0; i < len; i++) {
+            int b = 255 - i * 18;
+            if (b < 50) b = 50;
+            badge.setPixel(sx[i], sy[i], b);
+        }
+        badge.setPixel(fx, fy);            // the food, full brightness
     }
 
 private:

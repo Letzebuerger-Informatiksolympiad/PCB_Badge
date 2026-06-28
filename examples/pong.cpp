@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Pong against the computer; you are the left paddle (UP/DOWN).
 
 #include "sdk/Badge.hpp"

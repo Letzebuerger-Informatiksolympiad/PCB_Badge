@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // A picture wider than the screen; scroll it with LEFT and RIGHT.
 
 #include "sdk/Badge.hpp"

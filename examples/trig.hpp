@@ -1,5 +1,4 @@
 // helper used by the examples, by Eljakim Schrijvers
-// the badge SDK was developed by Luca Courte
 
 #pragma once
 

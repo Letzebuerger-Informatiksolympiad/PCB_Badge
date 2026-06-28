@@ -1,5 +1,4 @@
 // example by Eljakim Schrijvers, sorry for going crazy
-// the SDK that this was built on was developed by Luca Courte
 // Conway's Game of Life; press any button to start over.
 
 #include "sdk/Badge.hpp"
