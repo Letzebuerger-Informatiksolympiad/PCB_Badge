@@ -81,6 +81,13 @@ void render(Badge& b, int H, int M, int S, int hideField, int editField, int col
         int digs[4] = { M / 10, M % 10, S / 10, S % 10 };
         int xs[4]   = { 0, 5, 10, 15 };
         int flds[4] = { 1, 1, 0, 0 };
+        // The 4-wide '1' sits to the left of its cell; nudge a tens '1' a pixel right
+        // so it tucks up against its ones digit and the pair looks balanced.
+        if (digs[0] == 1) xs[0] += 1;
+        if (digs[2] == 1) xs[2] += 1;
+        // The '9' is sparse on its left, so "19" minutes looks gappy even after that
+        // nudge; give it one more pixel. Only minutes (it lingers); seconds flash by.
+        if (M == 19) xs[0] += 1;
         int colx[1] = { 9 };
         drawSeq(b, F4, y, digs, xs, flds, 4, colx, 1, hideField, editField, colon);
     } else if (H <= 9) {                               // H:MM:SS, 3x7 with gaps
