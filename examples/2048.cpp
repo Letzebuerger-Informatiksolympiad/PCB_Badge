@@ -34,10 +34,10 @@ public:
         }
 
         bool moved = false;
-        if (data.buttons.left.pressed)  moved = move(0);
-        if (data.buttons.right.pressed) moved = move(1);
-        if (data.buttons.up.pressed)    moved = move(2);
-        if (data.buttons.down.pressed)  moved = move(3);
+        if (data.buttons.left.pressed)  moved |= move(0);
+        if (data.buttons.right.pressed) moved |= move(1);
+        if (data.buttons.up.pressed)    moved |= move(2);
+        if (data.buttons.down.pressed)  moved |= move(3);
         if (moved) { spawn(); if (!canMove()) over = true; }
 
         drawGrid(badge);
