@@ -119,17 +119,30 @@ struct Refresh {
 };
 Refresh g_rf = { {{0}}, 0, 0, -1 };
 
+// The refresh state above is one global shared with the timer IRQ, so only one
+// Badge may drive it: a second instance would add a second alarm that also
+// advances `step` (corrupting the plane timing), and either destructor would
+// blank the display for the survivor.
+bool g_badgeExists = false;
+
 // Fired by the timer alarm: show one (column, plane), then re-arm for its hold.
 int64_t alarmCb(alarm_id_t, void*) {
     const int s = g_rf.step;
     write32(g_rf.words[g_rf.active][s]);
     g_rf.step = (s + 1 == STEPS) ? 0 : s + 1;
-    return -(int64_t)holdUs(s);   // negative: fire holdUs after this callback returns
+    // A positive return re-arms holdUs after this callback RETURNS (that is what
+    // the sign means to the Pico SDK). The hold has to start only once write32 has
+    // finished shifting: the shift itself takes ~10 us, longer than the shortest
+    // plane holds, so the hold must not include it.
+    return (int64_t)holdUs(s);
 }
 
 }  // namespace
 
 Badge::Badge() {
+    if (g_badgeExists) panic("Badge: only one Badge object may exist at a time");
+    g_badgeExists = true;
+
     // Battery first. A non-stop matrix refresh means the CPU never gets to sleep
     // deeply, so we run the core slow and low-voltage (the same move KimsPower
     // makes). The microsecond timer that paces the refresh is independent of the
@@ -177,6 +190,7 @@ Badge::~Badge() {
         g_rf.alarm = -1;
     }
     write32(ALL_COLS_OFF);
+    g_badgeExists = false;
 }
 
 void Badge::clearPixels() {
